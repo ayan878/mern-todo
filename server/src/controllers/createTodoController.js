@@ -4,10 +4,17 @@ import { TodoModel } from "../models/TodoModel.js";
 export const createTodo = async (req, res) => {
   try {
     // Extract title and completed status from the request body
-    const { title, completed = false } = req.body;
+    const { title, completed = false,desc } = req.body;
 
     // Validate title
-    if (!title || typeof title !== "string" || title.trim() === "") {
+    if (
+      !title ||
+      typeof title !== "string" ||
+      title.trim() === "" ||
+      !desc ||
+      typeof desc !== "string" ||
+      desc.trim() === ""
+    ) {
       return res
         .status(400)
         .send({ message: "Title is required and must be a non-empty string." });
@@ -17,6 +24,7 @@ export const createTodo = async (req, res) => {
     const todo = await TodoModel.create({
       title,
       completed,
+      desc,
     });
 
     // Send a 201 Created response with the new todo item

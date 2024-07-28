@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 export const updateTodo = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, completed } = req.body;
+    const { title, completed ,desc} = req.body;
 
     // Check if ID is valid
     if (!mongoose.isValidObjectId(id)) {
@@ -15,7 +15,7 @@ export const updateTodo = async (req, res) => {
     // Update the Todo item
     const todo = await TodoModel.findByIdAndUpdate(
       id,
-      { title, completed },
+      { title, completed,desc },
       { new: true, runValidators: true }
     );
 

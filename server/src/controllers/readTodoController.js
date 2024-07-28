@@ -1,5 +1,6 @@
 import { TodoModel } from "../models/TodoModel.js";
 
+
 export const getTodos = async (req, res) => {
   try {
     // Fetch all Todo items from the database
