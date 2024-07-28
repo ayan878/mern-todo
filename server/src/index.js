@@ -25,7 +25,7 @@ mongoose
       console.log(`Server is running at http://localhost:${PORT}`);
 
     //   add dummyTodos in mongodb
-      TodoModel.insertMany(dummyTodos);
+    //   TodoModel.insertMany(dummyTodos);
     });
   })
   .catch((error) => {
