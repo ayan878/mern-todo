@@ -1,21 +1,29 @@
 import { Trash } from "lucide-react";
+import { useMutation, useQueryClient } from "react-query";
+import { deleteTodo } from "../api/deleteTodoList";
 
 
-export default function TodoListCompleted(todos) {
- 
-console.log('completed',todos);
+export default function TodoListCompleted({todos}) {
+  console.log("completed", todos);
+  const queryClient=useQueryClient();
+
+  // Delete a todo
+  const mutationDelete = useMutation(deleteTodo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("todos");
+    },
+  });
 
   const handleDelete = (id) => {
-    // Implement the delete logic here
-    // Example: call deleteTodo function and update the list
-    console.log("Delete todo with id:", id);
+    mutationDelete.mutate(id);
   };
+  
 
   return (
     <ul className="w-full max-w-md mt-6">
       {todos.map((todo) => (
         <li
-          key={todo.id}
+          key={todo._id}
           className="bg-zinc-800 p-4 mb-4 rounded flex justify-between items-center"
         >
           <div>
