@@ -25,15 +25,15 @@
 // }
 
 
-export const updateTodo = async (todo) => {
+export const updateTodo = async (id) => {
   const response = await fetch(`http://localhost:3000/todos/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-        title:todo.text,
-        desc:todo.text,
+        // title:todo.text,
+        // desc:todo.text,
         completed:todo.completed
     }),
   });
