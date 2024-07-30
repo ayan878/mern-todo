@@ -1,6 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
-
 import TodoList from "./components/TodoList";
 import TodoListCompleted from "./components/TodoListCompleted";
 import fetchTodo from "./api/readTodoRequest";
@@ -13,8 +12,6 @@ function App() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [showTodo, setShowTodo] = useState(true);
-
-console.log(showTodo);
 
   // Fetch todos
   const {
@@ -54,11 +51,11 @@ console.log(showTodo);
   };
 
   const handleComplete = (id) => {
-    mutationUpdate.mutate(id, { completed: true });
+    mutationUpdate.mutate({ id, updates: { completed: true } });
   };
 
   const handleUncomplete = (id) => {
-    mutationUpdate.mutate(id, { completed: false });
+    mutationUpdate.mutate({ id, updates: { completed: false } });
   };
 
   const handleDelete = (id) => {
@@ -71,35 +68,33 @@ console.log(showTodo);
   const completedTodos = todos.filter((todo) => todo.completed);
   const activeTodos = todos.filter((todo) => !todo.completed);
 
-  
-
   return (
-    <div className="bg-zinc-900 w-screen h-screen flex flex-col items-center">
-      <h1 className="text-3xl text-white font-bold p-8 flex justify-center items-center">
+    <div className=" bg-zinc-900 w-full h-screen flex flex-col items-center p-4 box-border">
+      <h1 className="text-3xl text-white font-bold p-4 flex justify-center items-center w-full max-w-screen-lg">
         My Todos
       </h1>
-      <div className="bg-zinc-800 gap-4 p-6 md:h-44 w-fit">
-        <div className="flex flex-col gap-4 border-b items-center border-gray-600 pb-4 sm:w-auto sm:flex-row sm:items-start">
-          <div>
+      <div className="bg-zinc-800 gap-4 p-6 md:h-44 w-full max-w-screen-md box-border">
+        <div className="flex flex-col gap-4 border-b items-center border-gray-600 pb-4 sm:w-auto sm:flex-row sm:items-start ">
+          <div className="w-full max-w-xs">
             <h3 className="text-white font-semibold">Title:</h3>
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-72 p-2 placeholder-gray-400"
+              className="w-full p-2 placeholder-gray-400"
               placeholder="What's the title of your To Do"
             />
           </div>
-          <div>
+          <div className="w-full max-w-xs">
             <h3 className="font-semibold text-white">Description:</h3>
             <input
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-72 p-2 placeholder-gray-400"
+              className="w-full p-2 placeholder-gray-400"
               placeholder="What's the description of your To Do"
             />
           </div>
           <button
-            className="font-bold text-white bg-green-700 w-full md:w-16 h-10 md:mt-6 mt-4"
+            className="font-bold text-white bg-green-700  w-full sm:w-fit sm:p-2 md:w-24 h-10 md:mt-6 mt-4 "
             onClick={handleAdd}
           >
             Add
@@ -123,19 +118,21 @@ console.log(showTodo);
             Completed
           </button>
         </div>
-        {showTodo ? (
-          <TodoList
-            todos={activeTodos}
-            handleComplete={handleComplete}
-            handleDelete={handleDelete}
-          />
-        ) : (
-          <TodoListCompleted
-            todos={completedTodos}
-            handleUncomplete={handleUncomplete}
-            handleDelete={handleDelete}
-          />
-        )}
+        <div className="w-full">
+          {showTodo ? (
+            <TodoList
+              todos={activeTodos}
+              handleComplete={handleComplete}
+              handleDelete={handleDelete}
+            />
+          ) : (
+            <TodoListCompleted
+              todos={completedTodos}
+              handleUncomplete={handleUncomplete}
+              handleDelete={handleDelete}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
